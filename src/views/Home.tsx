@@ -1,7 +1,8 @@
 import React, {
   FC, ReactElement
 } from "react";
+import PoolCardList from "../components/PoolCardList";
 const Home: FC = (): ReactElement => (
-  <div />
+  <PoolCardList />
 );
 export default Home;

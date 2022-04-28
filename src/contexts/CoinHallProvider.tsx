@@ -42,8 +42,8 @@ export interface PoolAssetInfo {
 export interface PricesInfo {
   [key: ContractAddress]: {
     poolAddress: ContractAddress,
-    latest: number,
-    historical: number
+    latest?: number,
+    historical?: number
   }
 }
 export interface LiquidityPoolInfo {
@@ -78,9 +78,11 @@ export const CoinHallPoolStaticContext = createContext<{
       LiquidityPool: {}
     });
 export const CoinHallMethodContext = createContext<{
-  getTokenPairInfo:(axiosParams?: AxiosRequestConfig) => Promise<void>
+  getTokenPairInfo:(axiosParams?: AxiosRequestConfig) => Promise<void>,
+  deriveStringfromDecimals: (mc: number, decimals: number) => string
     }>({
-      getTokenPairInfo: () => Promise.resolve()
+      getTokenPairInfo: () => Promise.resolve(),
+      deriveStringfromDecimals: () => ""
     });
 const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement => {
   axios.defaults.baseURL = config.axios.baseUrl;
@@ -163,7 +165,7 @@ const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement
                       };
                     };
                     const setLocalPoolAsset = (asset: AssetTransport) => {
-                      poolAsset[asset.contractAddress] = {
+                      poolAsset[liquidityContract + asset.contractAddress] = {
                         poolAddress: liquidityContract,
                         assetAddress: asset.contractAddress,
                         timestamp: asset.timestamp,
@@ -199,7 +201,22 @@ const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement
                   setPoolAsset(poolAsset);
                   setLiquidityPool(liquidityPool);
                   setPrices(pricesInfo);
-                })
+                }),
+              deriveStringfromDecimals: (mc: number, decimals = 0) => {
+                const bilMC = Number((mc / (1000000000 * 10 ** decimals)).toFixed(2));
+                const milMC = Number((mc / (1000000 * 10 ** decimals)).toFixed(2));
+                const kMC = Number((mc / (1000 * 10 ** decimals)).toFixed(2));
+                if (bilMC >= 1) {
+                  return `${bilMC}B`;
+                }
+                if (milMC >= 1) {
+                  return `${milMC}M`;
+                }
+                if (kMC >= 1) {
+                  return `${kMC}K`;
+                }
+                return `${Number((mc / (1 * 10 ** decimals)).toFixed(2))}`;
+              }
             }), [])}
             >
               {children}

@@ -9,10 +9,12 @@ const App: FC = (): ReactElement => {
   const [isLoading, setIsLoading] = useState(false);
   return (
     <CoinHallProvider>
-      <div className="h-screen w-screen bg-sky-900 overflow-auto justify-items-start">
+      <div className="h-screen w-screen bg-gray-900 overflow-auto justify-center">
         <Navbar />
         <GetCoinHallData isLoading={isLoading} setIsLoading={setIsLoading} />
-        <Home />
+        <div className="">
+          <Home />
+        </div>
       </div>
     </CoinHallProvider>
   );
