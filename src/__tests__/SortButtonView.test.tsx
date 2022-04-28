@@ -5,7 +5,7 @@ import App from "../App";
 const userStory = `
 Given no inital state,
 When user navigates to the web page,
-Then user sees the buttons 'Top' and 'All'.
+Then user sees the sort icon and the button named 'Marketcap'.
 `;
 describe(userStory, () => {
   beforeEach(async () => {
@@ -14,7 +14,7 @@ describe(userStory, () => {
     await waitFor(() => screen.getByText("Loaded"));
   });
   it("shows the buttons", () => {
-    expect(screen.getByText(/Top/i)).toBeInTheDocument();
-    expect(screen.getByText(/All/i)).toBeInTheDocument();
+    expect(screen.getByTestId(/sort-icon/i)).toBeInTheDocument();
+    expect(screen.getByText(/Market Cap/i)).toBeInTheDocument();
   });
 });
