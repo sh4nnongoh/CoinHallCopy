@@ -4,6 +4,7 @@ import {
   CoinHallPoolStaticContext,
   ContractAddress
 } from "../contexts/CoinHallProvider";
+import fallback from "../assets/fallback.svg";
 const PoolCardIcon: FC<{
   contractAddress: ContractAddress
 }> = ({
@@ -13,8 +14,16 @@ const PoolCardIcon: FC<{
   const { AssetStatic } = useContext(CoinHallAssetStaticContext);
   const baseAsset = AssetStatic[LiquidityPool[contractAddress].baseAsset];
   return (
-    <div className="w-10">
-      {baseAsset.icon && <img alt={`token-logo-${baseAsset.symbol}`} src={baseAsset.icon} />}
+    <div className="relative flex-none flex rounded-full ring-2">
+      <div className="h-10 w-10 rounded-full object-contain">
+        <img
+          alt={`token-logo-${baseAsset.symbol}`}
+          src={baseAsset.icon || fallback}
+          onError={(e) => {
+            e.currentTarget.src = fallback;
+          }}
+        />
+      </div>
     </div>
   );
 };
