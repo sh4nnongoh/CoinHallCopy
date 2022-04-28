@@ -7,7 +7,7 @@ const PoolCardList = () => {
     .keys(LiquidityPool)
     .map((contractAddress, i) => <PoolCard key={contractAddress} contractAddress={contractAddress} index={i} />);
   return (
-    <div className="flex flex-col m-auto max-w-5xl grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-12">
+    <div className="flex flex-col m-auto grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {cards}
     </div>
   );

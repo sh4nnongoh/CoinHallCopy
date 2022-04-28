@@ -12,7 +12,7 @@ const App: FC = (): ReactElement => {
       <div className="h-screen w-screen bg-gray-900 overflow-auto justify-center">
         <Navbar />
         <GetCoinHallData isLoading={isLoading} setIsLoading={setIsLoading} />
-        <div className="">
+        <div className="max-w-5xl px-4 m-auto flex flex-col mb-12">
           <Home />
         </div>
       </div>
