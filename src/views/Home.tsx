@@ -1,7 +1,5 @@
 import React, { FC, ReactElement } from "react";
 const Home: FC = (): ReactElement => (
-  <div>
-    Work In Progress
-  </div>
+  <div />
 );
 export default Home;
