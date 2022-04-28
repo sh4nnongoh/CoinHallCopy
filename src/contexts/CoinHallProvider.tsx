@@ -135,7 +135,7 @@ const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement
                   const liquidityPool: LiquidityPoolInfo = {};
                   Object.keys(pairs).sort().forEach((liquidityContract) => {
                     const baseAssetNum = _.get(pairs, [liquidityContract, "defaultBase"]) as string;
-                    const otherAssetNum = baseAssetNum === "asset1" ? "asset2" : "asset1";
+                    const otherAssetNum = baseAssetNum === "asset0" ? "asset1" : "asset0";
                     const baseAsset = _.get(pairs, [liquidityContract, baseAssetNum]) as AssetTransport;
                     const otherAsset = _.get(pairs, [liquidityContract, otherAssetNum]) as AssetTransport;
                     const setLocalAssetStatic = (asset: AssetTransport) => {
@@ -216,8 +216,8 @@ interface PairsTransport {
     timestamp: string,
     defaultBase: string,
     dex: string,
-    asset1: AssetTransport,
-    asset2: AssetTransport
+    asset0: AssetTransport,
+    asset1: AssetTransport
   }
 }
 interface LatestPriceTransport {

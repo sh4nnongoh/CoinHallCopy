@@ -1,6 +1,7 @@
-import React, { FC, ReactElement } from "react";
-import Loader from "../components/Loader";
+import React, {
+  FC, ReactElement
+} from "react";
 const Home: FC = (): ReactElement => (
-  <Loader />
+  <div />
 );
 export default Home;
