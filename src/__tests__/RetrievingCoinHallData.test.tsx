@@ -30,4 +30,7 @@ describe(userStory, () => {
   it("does not show the loading view", () => {
     expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
   });
+  it("starts the timer", () => {
+    expect(screen.getByText("Timer Started")).toBeInTheDocument();
+  });
 });

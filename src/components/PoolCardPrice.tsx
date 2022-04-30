@@ -14,7 +14,7 @@ const PoolCardPrice: FC<{
       {
         !!price
         && (
-          <div className="font-mono text-gray-50 sm:text-xl -mb-1">
+          <div className="font-mono text-gray-50 -mb-1">
             {formatedPrice}
             {" "}
             UST

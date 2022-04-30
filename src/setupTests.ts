@@ -10,3 +10,4 @@ jest.mock("axios", () => ({
   post: jest.fn().mockResolvedValue({}),
   put: jest.fn().mockResolvedValue({})
 }));
+jest.useFakeTimers();

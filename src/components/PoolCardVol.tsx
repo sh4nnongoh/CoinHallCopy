@@ -27,7 +27,7 @@ const PoolCardVol: FC<{
       {
         !!otherAsset.volume24h && (
         <div className="text-gray-300 font-mono text-sm leading-4">
-          {deriveStringfromDecimals(otherAsset.volume24h, baseAssetDecimals || 0)}
+          {deriveStringfromDecimals(otherAsset.volume24h, baseAssetDecimals || 6)}
           {" "}
           {otherAssetSymbol}
         </div>

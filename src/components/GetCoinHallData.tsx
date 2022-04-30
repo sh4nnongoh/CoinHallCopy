@@ -34,7 +34,8 @@ const GetCoinHallData: FC<{
   }, [
     getTokenPairInfo,
     filterAndSortPoolCards,
-    setIsLoading]);
+    setIsLoading
+  ]);
   return (
     <>
       {isLoading && <Loader />}
