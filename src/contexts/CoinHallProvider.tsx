@@ -355,7 +355,7 @@ const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement
   );
 };
 export default CoinHallProvider;
-interface PairsTransport {
+export interface PairsTransport {
   [key: ContractAddress]: {
     timestamp: string,
     defaultBase: string,
@@ -364,13 +364,13 @@ interface PairsTransport {
     asset1: AssetTransport
   }
 }
-interface LatestPriceTransport {
+export interface LatestPriceTransport {
   [key: ContractAddress]: number
 }
-interface HistoricalPriceTransport {
+export interface HistoricalPriceTransport {
   [key: ContractAddress]: number
 }
-interface AssetTransport {
+export interface AssetTransport {
   contractAddress: ContractAddress,
   name: string,
   symbol: string,

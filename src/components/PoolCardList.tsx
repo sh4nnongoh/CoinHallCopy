@@ -4,6 +4,7 @@ import PoolCard from "./PoolCard";
 const PoolCardList = () => {
   const { PoolCardList: cardList } = useContext(CoinHallFilterSortContext);
   const cards = cardList
+    .slice(0, 24)
     .map((contractAddress, i) => (
       <PoolCard
         key={contractAddress}
