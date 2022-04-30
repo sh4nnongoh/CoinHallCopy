@@ -1,10 +1,14 @@
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
 import { CoinHallFilterSortContext } from "../contexts/CoinHallProvider";
 import PoolCard from "./PoolCard";
-const PoolCardList = () => {
+const PoolCardList: FC<{
+  page: number
+}> = ({
+  page
+}) => {
   const { PoolCardList: cardList } = useContext(CoinHallFilterSortContext);
   const cards = cardList
-    .slice(0, 24)
+    .slice((page - 1) * 24, page * 24)
     .map((contractAddress, i) => (
       <PoolCard
         key={contractAddress}
