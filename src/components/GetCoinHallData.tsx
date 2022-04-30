@@ -13,25 +13,32 @@ const GetCoinHallData: FC<{
 }): ReactElement => {
   const {
     getTokenPairInfo,
-    filterAndSortPoolCards
+    filterAndSortPoolCards,
+    localStoreHasData
   } = useContext(CoinHallMethodContext);
   useEffect(() => {
     const source = axios.CancelToken.source();
-    setIsLoading(true);
-    getTokenPairInfo({ cancelToken: source.token })
-      .then(() => {
-        filterAndSortPoolCards();
-        return setIsLoading(false);
-      })
-      .catch((e) => {
-        if (!axios.isCancel(e)) {
-          console.log("Something went wrong:", e);
-        }
-      });
+    if (!localStoreHasData()) {
+      setIsLoading(true);
+      getTokenPairInfo({ cancelToken: source.token })
+        .then(() => {
+          filterAndSortPoolCards();
+          return setIsLoading(false);
+        })
+        .catch((e) => {
+          if (!axios.isCancel(e)) {
+            console.log("Something went wrong:", e);
+          }
+        });
+    } else {
+      setIsLoading(false);
+      filterAndSortPoolCards();
+    }
     return () => {
       source.cancel();
     };
   }, [
+    localStoreHasData,
     getTokenPairInfo,
     filterAndSortPoolCards,
     setIsLoading

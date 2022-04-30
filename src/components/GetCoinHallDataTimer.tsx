@@ -7,7 +7,7 @@ const GetCoinHallDataTimer = (): ReactElement => {
   useEffect(() => {
     const timer = setInterval(() => {
       getTokenPairInfo();
-    }, 5000);
+    }, 10000);
     return () => clearInterval(timer);
   }, [getTokenPairInfo]);
   return (

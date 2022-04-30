@@ -90,25 +90,47 @@ export const CoinHallMethodContext = createContext<{
   getTokenPairInfo:(axiosParams?: AxiosRequestConfig) => Promise<void>,
   filterAndSortPoolCards: () => void,
   deriveStringfromDecimals: (mc: number, decimals: number) => string,
-  setPoolCardList: React.Dispatch<React.SetStateAction<ContractAddress[]>>
+  setPoolCardList: React.Dispatch<React.SetStateAction<ContractAddress[]>>,
+  localStoreHasData: () => boolean
     }>({
       getTokenPairInfo: () => Promise.resolve(),
       filterAndSortPoolCards: () => "",
       deriveStringfromDecimals: () => "",
-      setPoolCardList: () => ""
+      setPoolCardList: () => "",
+      localStoreHasData: () => false
     });
 const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement => {
   axios.defaults.baseURL = config.axios.baseUrl;
-  const [AssetStatic, setAssetStatic] = useState<AssetStaticInfo>({});
-  const [AssetDynamic, setAssetDynamic] = useState<AssetDynamicInfo>({});
-  const [PoolAsset, setPoolAsset] = useState<PoolAssetInfo>({});
-  const [Prices, setPrices] = useState<PricesInfo>({});
-  const [LiquidityPool, setLiquidityPool] = useState<LiquidityPoolInfo>({});
+  const localStoreAssetStatic = localStorage.getItem("AssetStaticInfo");
+  const localStoreAssetDynamic = localStorage.getItem("AssetDynamicInfo");
+  const localStorePoolAsset = localStorage.getItem("PoolAssetInfo");
+  const localStorePrices = localStorage.getItem("PricesInfo");
+  const localStoreLiquidityPool = localStorage.getItem("LiquidityPoolInfo");
+  const [AssetStatic, setAssetStatic] = useState<AssetStaticInfo>(
+    localStoreAssetStatic ? JSON.parse(localStoreAssetStatic) : {}
+  );
+  const [AssetDynamic, setAssetDynamic] = useState<AssetDynamicInfo>(
+    localStoreAssetDynamic ? JSON.parse(localStoreAssetDynamic) : {}
+  );
+  const [PoolAsset, setPoolAsset] = useState<PoolAssetInfo>(
+    localStorePoolAsset ? JSON.parse(localStorePoolAsset) : {}
+  );
+  const [Prices, setPrices] = useState<PricesInfo>(
+    localStorePrices ? JSON.parse(localStorePrices) : {}
+  );
+  const [LiquidityPool, setLiquidityPool] = useState<LiquidityPoolInfo>(
+    localStoreLiquidityPool ? JSON.parse(localStoreLiquidityPool) : {}
+  );
   const [PoolCardList, setPoolCardList] = useState<ContractAddress[]>([]);
-  const refAssetStatic = useRef({});
-  const refAssetDynamic = useRef({});
-  const refPoolAsset = useRef({});
-  const refLiquidityPool = useRef({});
+  const refAssetStatic = useRef(AssetStatic);
+  const refAssetDynamic = useRef(AssetDynamic);
+  const refPoolAsset = useRef(PoolAsset);
+  const refLiquidityPool = useRef(LiquidityPool);
+  const refLocalStoreAssetStatic = useRef(localStoreAssetStatic);
+  const refLocalStoreAssetDynamic = useRef(localStoreAssetDynamic);
+  const refLocalStorePoolAsset = useRef(localStorePoolAsset);
+  const refLocalStorePrices = useRef(localStorePrices);
+  const refLocalStoreLiquidityPool = useRef(localStoreLiquidityPool);
   return (
     <CoinHallFilterSortContext.Provider value={useMemo(() => ({
       PoolCardList
@@ -143,7 +165,7 @@ const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement
             ])}
             >
               <CoinHallMethodContext.Provider value={useMemo(() => ({
-                // Time Complexity: O(N)
+                // Time Complexity: O(N log N)
                 getTokenPairInfo: (axiosParams?: AxiosRequestConfig) => Promise.all([
                   axios.get("/v1/charts/terra/pairs", { ...axiosParams }),
                   axios.get("/charts/terra/prices/latest", { ...axiosParams }),
@@ -252,15 +274,20 @@ const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement
                       refAssetStatic.current = assetStatic;
                       setAssetStatic(assetStatic);
                     }
-                    refAssetDynamic.current = assetDynamic;
                     setAssetDynamic(assetDynamic);
-                    refPoolAsset.current = poolAsset;
                     setPoolAsset(poolAsset);
-                    refLiquidityPool.current = liquidityPool;
                     setLiquidityPool(liquidityPool);
                     setPrices(pricesInfo);
+                    refAssetDynamic.current = assetDynamic;
+                    refPoolAsset.current = poolAsset;
+                    refLiquidityPool.current = liquidityPool;
+                    localStorage.setItem("AssetStaticInfo", JSON.stringify(assetStatic));
+                    localStorage.setItem("AssetDynamicInfo", JSON.stringify(assetDynamic));
+                    localStorage.setItem("PoolAssetInfo", JSON.stringify(poolAsset));
+                    localStorage.setItem("PricesInfo", JSON.stringify(pricesInfo));
+                    localStorage.setItem("LiquidityPoolInfo", JSON.stringify(liquidityPool));
                   }),
-                // Time Complexity: O(N)
+                // Time Complexity: O(N log N)
                 filterAndSortPoolCards: () => {
                   const asset = refAssetDynamic.current as AssetDynamicInfo;
                   const poolAssets = refPoolAsset.current as PoolAssetInfo;
@@ -326,6 +353,16 @@ const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement
                       return 0;
                     });
                   setPoolCardList(poolCardList);
+                },
+                localStoreHasData: () => {
+                  if (refLocalStoreAssetStatic.current
+                    && refLocalStoreAssetDynamic.current
+                    && refLocalStorePoolAsset.current
+                    && refLocalStorePrices.current
+                    && refLocalStoreLiquidityPool.current) {
+                    return true;
+                  }
+                  return false;
                 },
                 deriveStringfromDecimals: (mc: number, decimals = 0) => {
                   const bilMC = Number((mc / (1000000000 * 10 ** decimals)).toFixed(2));
