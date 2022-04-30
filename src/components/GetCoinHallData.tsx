@@ -11,12 +11,18 @@ const GetCoinHallData: FC<{
   isLoading,
   setIsLoading
 }): ReactElement => {
-  const { getTokenPairInfo } = useContext(CoinHallMethodContext);
+  const {
+    getTokenPairInfo,
+    filterAndSortPoolCards
+  } = useContext(CoinHallMethodContext);
   useEffect(() => {
     const source = axios.CancelToken.source();
     setIsLoading(true);
     getTokenPairInfo({ cancelToken: source.token })
-      .then(() => setIsLoading(false))
+      .then(() => {
+        filterAndSortPoolCards();
+        return setIsLoading(false);
+      })
       .catch((e) => {
         if (!axios.isCancel(e)) {
           console.log("Something went wrong:", e);
@@ -25,7 +31,10 @@ const GetCoinHallData: FC<{
     return () => {
       source.cancel();
     };
-  }, [getTokenPairInfo, setIsLoading]);
+  }, [
+    getTokenPairInfo,
+    filterAndSortPoolCards,
+    setIsLoading]);
   return (
     <>
       {isLoading && <Loader />}

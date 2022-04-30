@@ -34,7 +34,7 @@ describe(userStory, () => {
         circSupplyAPI: "<some_url>",
         timestamp: "1970-01-01T00:00:00.000Z",
         totalSupply: 17279124027790512,
-        poolAmount: 1111417304686,
+        poolAmount: 5000000,
         volume24h: 15600000000,
         volume7d: 238632021673
       },
@@ -89,7 +89,7 @@ describe(userStory, () => {
   });
   it("shows the Mkt Cap", () => {
     expect(screen.getByText("Mkt Cap")).toBeInTheDocument();
-    expect(screen.getByText("5B UST")).toBeInTheDocument();
+    expect(screen.getByText("1M UST")).toBeInTheDocument();
   });
   it("shows the pair name", () => {
     expect(screen.getByText("t5/UST")).toBeInTheDocument();

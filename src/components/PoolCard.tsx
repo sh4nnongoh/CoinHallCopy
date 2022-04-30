@@ -14,9 +14,11 @@ const PoolCard: FC<{
   contractAddress,
   index
 }) : ReactElement => (
-  <div className="relative min-w-0 p-4 bg-gray-800
-  rounded-lg hover:bg-violet-600 hover:bg-opacity-30
-  hover:shadow-violet-900/25 hover:shadow-lg transition duration-100"
+  <div
+    data-testid="pool-card"
+    className="relative min-w-0 p-4 bg-gray-800
+    rounded-lg hover:bg-violet-600 hover:bg-opacity-30
+    hover:shadow-violet-900/25 hover:shadow-lg transition duration-100"
   >
     <div className="absolute top-0 right-0 text-sm px-[0.4rem]
     text-gray-300 bg-gray-700 rounded-tr-lg rounded-bl-lg font-mono"
@@ -35,12 +37,12 @@ const PoolCard: FC<{
       <div className="flex space-x-[0.4rem] font-mono text-gray-50 sm:text-xl -mb-1">
         <div>
           <div className="text-gray-400 text-opacity-75
-        font-semibold text-xs leading-4"
+          font-semibold text-xs leading-4"
           >
             Mkt Cap
           </div>
           <div className="text-gray-400 text-opacity-75
-        font-semibold text-xs leading-4"
+          font-semibold text-xs leading-4"
           >
             Vol (24h)
           </div>
