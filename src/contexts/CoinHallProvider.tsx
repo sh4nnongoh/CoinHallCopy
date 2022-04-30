@@ -89,11 +89,13 @@ export const CoinHallPoolStaticContext = createContext<{
 export const CoinHallMethodContext = createContext<{
   getTokenPairInfo:(axiosParams?: AxiosRequestConfig) => Promise<void>,
   filterAndSortPoolCards: () => void,
-  deriveStringfromDecimals: (mc: number, decimals: number) => string
+  deriveStringfromDecimals: (mc: number, decimals: number) => string,
+  setPoolCardList: React.Dispatch<React.SetStateAction<ContractAddress[]>>
     }>({
       getTokenPairInfo: () => Promise.resolve(),
       filterAndSortPoolCards: () => "",
-      deriveStringfromDecimals: () => ""
+      deriveStringfromDecimals: () => "",
+      setPoolCardList: () => ""
     });
 const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement => {
   axios.defaults.baseURL = config.axios.baseUrl;
@@ -339,7 +341,8 @@ const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement
                     return `${kMC}K`;
                   }
                   return `${Number((mc / (1 * 10 ** decimals)).toFixed(2))}`;
-                }
+                },
+                setPoolCardList
               }), [])}
               >
                 {children}
