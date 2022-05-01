@@ -1,5 +1,5 @@
 # CoinHallCopy
-An example project to demonstrate my personal development style, using https://coinhall.org/ as a reference. This is a minimal copy of the project that displays token metrics from the Terra Luna ecosystem. The webapp can be viewed live [here](https://sh4nnongoh.github.io/CoinHallCopy/).
+An example project to demonstrate my personal development style, using https://coinhall.org/ as a reference. This is a minimal copy of the project that displays token metrics from the Terra Luna ecosystem. The webapp cannot be viewed live on Github Pages as Coin Hall has enabled CORS, but can be viewed locally on localhost; follow the `Quick Start` guide.
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), and modified to suit Terra's [Wallet Provider](https://github.com/terra-money/wallet-provider) component.
@@ -14,14 +14,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Quick Start
 ```
+// Install Packages
+yarn
+
 // Execute Lint
 yarn lint
 
 // Execute Tests
 yarn test
-
-// Start the CORS server to allow requests from localhost
-yarn cors
 
 // Start the webapp locally
 yarn start
