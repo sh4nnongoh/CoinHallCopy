@@ -5,16 +5,19 @@ import App from "../App";
 const userStory = `
 Given no inital state,
 When user navigates to the web page,
-Then user sees the buttons 'Top' and 'All'.
+Then user sees the Connect Wallet button.
 `;
 describe(userStory, () => {
   beforeEach(async () => {
     axios.get = jest.fn().mockResolvedValue({ data: {} });
+    axios.CancelToken.source = jest.fn().mockReturnValue({
+      token: "token",
+      cancel: jest.fn()
+    });
     render(<App />);
     await waitFor(() => screen.getByText("Loaded"));
   });
-  it("shows the buttons", () => {
-    expect(screen.getByText("Top")).toBeInTheDocument();
-    expect(screen.getByText("All")).toBeInTheDocument();
+  it("shows the button", () => {
+    expect(screen.getByText(/Connect Wallet/i)).toBeInTheDocument();
   });
 });
