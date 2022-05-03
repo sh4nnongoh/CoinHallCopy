@@ -126,6 +126,11 @@ const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement
   const refAssetDynamic = useRef(AssetDynamic);
   const refPoolAsset = useRef(PoolAsset);
   const refLiquidityPool = useRef(LiquidityPool);
+  const refLocalStoreAssetStatic = useRef(localStoreAssetStatic);
+  const refLocalStoreAssetDynamic = useRef(localStoreAssetDynamic);
+  const refLocalStorePoolAsset = useRef(localStorePoolAsset);
+  const refLocalStorePrices = useRef(localStorePrices);
+  const refLocalStoreLiquidityPool = useRef(localStoreLiquidityPool);
   return (
     <CoinHallFilterSortContext.Provider value={useMemo(() => ({
       PoolCardList
@@ -350,11 +355,11 @@ const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement
                   setPoolCardList(poolCardList);
                 },
                 localStoreHasData: () => {
-                  if (localStoreAssetStatic
-                    && localStoreAssetDynamic
-                    && localStorePoolAsset
-                    && localStorePrices
-                    && localStoreLiquidityPool) {
+                  if (refLocalStoreAssetStatic.current
+                    && refLocalStoreAssetDynamic.current
+                    && refLocalStorePoolAsset.current
+                    && refLocalStorePrices.current
+                    && refLocalStoreLiquidityPool.current) {
                     return true;
                   }
                   return false;
@@ -375,13 +380,7 @@ const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement
                   return `${Number((mc / (1 * 10 ** decimals)).toFixed(2))}`;
                 },
                 setPoolCardList
-              }), [
-                localStoreAssetStatic,
-                localStoreAssetDynamic,
-                localStorePoolAsset,
-                localStorePrices,
-                localStoreLiquidityPool
-              ])}
+              }), [])}
               >
                 {children}
               </CoinHallMethodContext.Provider>
