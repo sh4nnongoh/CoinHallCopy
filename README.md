@@ -65,7 +65,7 @@ CoinHallAssetDynamicContext
           App
 ```
 
-The application will be wrapped by the various contexts, allowing the application components to pull data and methods as needed. All methods / functions will be stored in the `CoinHallMethodContext` component as their execution do not change over the product lifecycle. Each of the entities has a separate `static` and `dynamic` context, allowing isolated rendering of individual components in the application. This leaves room for exapansion in our frontend project, as future objects can be slot in as needed to the right context or even having their own context.
+The application will be wrapped by the various contexts, allowing the application components to pull data and methods as needed. All methods / functions will be stored in the `CoinHallMethodContext` component as their execution do not change over the product lifecycle. Each of the entities has a separate `static` and `dynamic` context, allowing isolated rendering of individual components in the application. This leaves room for expansion in our frontend project, as future objects can be slot in as needed to the right context or even having their own context.
 
 ### Cache
 
