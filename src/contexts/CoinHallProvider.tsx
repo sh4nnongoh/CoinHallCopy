@@ -165,7 +165,7 @@ const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement
             ])}
             >
               <CoinHallMethodContext.Provider value={useMemo(() => ({
-                // Time Complexity: O(N log N)
+                // Time Complexity: O(N)
                 getTokenPairInfo: (axiosParams?: AxiosRequestConfig) => Promise.all([
                   axios.get("/v1/charts/terra/pairs", { ...axiosParams }),
                   axios.get("/charts/terra/prices/latest", { ...axiosParams }),
@@ -287,7 +287,7 @@ const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement
                     localStorage.setItem("PricesInfo", JSON.stringify(pricesInfo));
                     localStorage.setItem("LiquidityPoolInfo", JSON.stringify(liquidityPool));
                   }),
-                // Time Complexity: O(N log N)
+                // Time Complexity: O(N)
                 filterAndSortPoolCards: () => {
                   const asset = refAssetDynamic.current as AssetDynamicInfo;
                   const poolAssets = refPoolAsset.current as PoolAssetInfo;
