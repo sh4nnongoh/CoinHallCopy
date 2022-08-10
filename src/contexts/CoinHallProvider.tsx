@@ -100,7 +100,7 @@ export const CoinHallMethodContext = createContext<{
       localStoreHasData: () => false
     });
 const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement => {
-  axios.defaults.baseURL = config.axios.baseUrl;
+  // axios.defaults.baseURL = config.axios.baseUrl;
   const localStoreAssetStatic = localStorage.getItem("AssetStaticInfo");
   const localStoreAssetDynamic = localStorage.getItem("AssetDynamicInfo");
   const localStorePoolAsset = localStorage.getItem("PoolAssetInfo");
@@ -167,9 +167,9 @@ const CoinHallProvider: FC<{children: ReactNode}> = ({ children }): ReactElement
               <CoinHallMethodContext.Provider value={useMemo(() => ({
                 // Time Complexity: O(N LOG N)
                 getTokenPairInfo: (axiosParams?: AxiosRequestConfig) => Promise.all([
-                  axios.get("/v1/charts/terra/pairs", { ...axiosParams }),
-                  axios.get("/charts/terra/prices/latest", { ...axiosParams }),
-                  axios.get("/charts/terra/prices/historical", { ...axiosParams })
+                  axios.get("/api/pairs", { ...axiosParams }),
+                  axios.get("/api/latest", { ...axiosParams }),
+                  axios.get("/api/historical", { ...axiosParams })
                 ])
                   .then(([r1, r2, r3]) => {
                     const pairs: PairsTransport = r1.data;

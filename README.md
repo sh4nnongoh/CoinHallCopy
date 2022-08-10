@@ -1,10 +1,11 @@
 # CoinHallCopy
-An example project to demonstrate my personal development style, using https://coinhall.org/ as a reference. This is a minimal copy of the project that displays token metrics from the Terra Luna ecosystem. The webapp cannot be viewed live on Github Pages as Coin Hall has enabled CORS, but can be viewed locally on localhost; follow the `Quick Start` guide.
 
+An example project to demonstrate my personal development style, using https://coinhall.org/ as a reference. This is a minimal copy of the project that displays token metrics from the Terra Luna ecosystem. The webapp can be viewed live [here](https://coinhallcopy.sh4nnongoh1.vercel.app/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), and modified to suit Terra's [Wallet Provider](https://github.com/terra-money/wallet-provider) component.
 
 ## Table of Contents
+
 1. [Quick Start](#Quick-Start)
 2. [Architecture](#Architecture)
 3. [Managing Application State](#Managing-Application-State)
@@ -13,6 +14,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ---
 
 ## Quick Start
+
 ```
 // Install Packages
 yarn
@@ -28,11 +30,13 @@ yarn start
 ```
 
 ### Available Scripts
-Refer to ```package.json```, for the list of available commands.
+
+Refer to `package.json`, for the list of available commands.
 
 ---
 
 ## Architecture
+
 This being a frontend project, we have to work with the endpoints available to us.
 
 ```
@@ -55,12 +59,13 @@ This final ER diagram forms the backbone of our frontend application.
 
 ## Managing Application State
 
-We will use React's ```useContext```, ```useState```, and other relevant hooks to manage and store the application state, which can be visually represented using indentations as shown below. For full details refer to [CoinHallProvider.tsx](src/contexts/CoinHallProvider.tsx).
+We will use React's `useContext`, `useState`, and other relevant hooks to manage and store the application state, which can be visually represented using indentations as shown below. For full details refer to [CoinHallProvider.tsx](src/contexts/CoinHallProvider.tsx).
+
 ```
 CoinHallAssetDynamicContext
   CoinHallAssetStaticContext
-    CoinHallPoolDynamicContext  
-      CoinHallPoolStaticContext  
+    CoinHallPoolDynamicContext
+      CoinHallPoolStaticContext
         CoinHallMethodContext
           App
 ```
@@ -74,9 +79,9 @@ Currently, Coinhall uses `IndexDB` to cache their network requests. This project
 ---
 
 ## Development Style
+
 ### Test-Driven Development with RTL & Cucumber
 
-Navigating to ```src/__tests__``` , one can see that the tests are written in a way that mimics the actual `User Story`. This acts as a contract between developers and the product owner as to what features have been completed, and will carry on to exist throughout the product lifecycle. There are no unit tests in this project as they do not provide any value to the product; unit tests act as a medium of communication between developers and will be dependent on internal best practices made by the team. With `React Testing Library (RTL)`, writing `User Story` tests that mimics actual user behavior is made possible, while also being able to execute as fast as how traditonal unit tests do.
+Navigating to `src/__tests__` , one can see that the tests are written in a way that mimics the actual `User Story`. This acts as a contract between developers and the product owner as to what features have been completed, and will carry on to exist throughout the product lifecycle. There are no unit tests in this project as they do not provide any value to the product; unit tests act as a medium of communication between developers and will be dependent on internal best practices made by the team. With `React Testing Library (RTL)`, writing `User Story` tests that mimics actual user behavior is made possible, while also being able to execute as fast as how traditonal unit tests do.
 
 There are limitations to using `RTL` such as testing components that do not exist on the `JSDOM`. An example would be Terra's `Wallet Connect` components. In this scenario, mocking out the entire components would be used instead as we trust that the components are made functional and secured by Terra. We can then simply test that the mocked component has been rendered.
-
