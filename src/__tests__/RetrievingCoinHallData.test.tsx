@@ -23,9 +23,9 @@ describe(userStory, () => {
   });
   it("calls axios with the right props", () => {
     expect(mockAxios).toHaveBeenCalledTimes(3);
-    expect(mockAxios).toHaveBeenNthCalledWith(1, "/v1/charts/terra/pairs", { cancelToken: "token" });
-    expect(mockAxios).toHaveBeenNthCalledWith(2, "/charts/terra/prices/latest", { cancelToken: "token" });
-    expect(mockAxios).toHaveBeenNthCalledWith(3, "/charts/terra/prices/historical", { cancelToken: "token" });
+    expect(mockAxios).toHaveBeenNthCalledWith(1, "/api/pairs", { cancelToken: "token" });
+    expect(mockAxios).toHaveBeenNthCalledWith(2, "/api/latest", { cancelToken: "token" });
+    expect(mockAxios).toHaveBeenNthCalledWith(3, "/api/historical", { cancelToken: "token" });
   });
   it("does not show the loading view", () => {
     expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
